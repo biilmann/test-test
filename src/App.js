@@ -1,22 +1,28 @@
-import React from 'react';
+import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const [text, setText] = useState(null)
+
+  const handleClick = async (e) => {
+    const response = await fetch("/api/hello")
+    const data = await response.json()
+    setText(data.text)
+  }
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          {text || "Click below to load"}
         </p>
         <a
           className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+          onClick={handleClick}
         >
-          Learn React
+          Click to load a message
         </a>
       </header>
     </div>
